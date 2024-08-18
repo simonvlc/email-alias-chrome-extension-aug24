@@ -26,14 +26,19 @@
       "default_title": "Generate Email Alias"
     },
     "background": {
-      "service_worker": "background.js"
+      "service_worker": "src/background/background.js"
     },
     "content_scripts": [
       {
-        "resources": ["history.html"],
         "matches": ["<all_urls>"],
-        "js": ["content.js"]
+        "js": ["src/content/content.js"]
       }
     ],
-    "options_page": "options.html"
+    "web_accessible_resources": [
+      {
+        "resources": ["src/history/history.html"],
+        "matches": ["<all_urls>"]
+      }
+    ],
+    "options_page": "src/options/options.html"
   }
