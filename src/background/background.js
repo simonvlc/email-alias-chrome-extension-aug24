@@ -38,6 +38,13 @@ chrome.contextMenus.onClicked.addListener(function(info, tab) {
 // Function to store a new alias in the history
 function storeAlias(alias) {
     chrome.storage.sync.get(['aliasHistory'], function(result) {
+
+        // Check that we can access the alias history
+        if (chrome.runtime.lastError) {
+            console.error('Error retrieving alias history:', chrome.runtime.lastError);
+            return;
+        }
+
         // Get the current history or initialize an empty array if it doesn't exist
         let history = result.aliasHistory || [];
         
@@ -49,6 +56,13 @@ function storeAlias(alias) {
         
         // Save the updated history back to storage
         chrome.storage.sync.set({ aliasHistory: history });
+
+        // 
+        chrome.storage.sync.set({ aliasHistory: history }, function() {
+            if (chrome.runtime.lastError) {
+                console.error('Error saving alias history:', chrome.runtime.lastError);
+            }
+        });
     });
 }
 
