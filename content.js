@@ -25,6 +25,9 @@ function generateAndInsertAlias(baseEmail) {
 
     // Set the value of the input
     emailInput.value = alias;
+    
+    // Passes the generated alias to be stored in history
+    chrome.runtime.sendMessage({ action: "aliasGenerated", alias: alias });
 
     // Create and dispatch events to simulate user input
     // We need to do this to trigger the email validation on the page

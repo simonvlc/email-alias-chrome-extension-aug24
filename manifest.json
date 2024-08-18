@@ -6,7 +6,8 @@
     "permissions": [
       "activeTab",
       "storage",
-      "contextMenus"
+      "contextMenus",
+      "clipboardWrite"
     ],
     "host_permissions": [
       "<all_urls>"
@@ -29,6 +30,7 @@
     },
     "content_scripts": [
       {
+        "resources": ["history.html"],
         "matches": ["<all_urls>"],
         "js": ["content.js"]
       }
