@@ -1,23 +1,6 @@
-// Listen for when the extension is installed or updated
-chrome.runtime.onInstalled.addListener(function(details) {
-    if (details.reason === "install") {
-        // Check if the base email is set when the extension is first installed
-        chrome.storage.sync.get(['baseEmail'], function(result) {
-            if (!result.baseEmail) {
-                // If base email is not set, open the options page
-                chrome.runtime.openOptionsPage();
-            }
-        });
-    }
-});
+import './configuration.js';
 
-// Add context menu items to the extension icon
-chrome.contextMenus.create({
-    id: "openConfig",
-    title: "Configuration",
-    contexts: ["action"]  // This makes it appear when right-clicking the extension icon
-});
-
+// Create a context menu item to view the alias history
 chrome.contextMenus.create({
     id: "viewHistory",
     title: "View Alias History",
@@ -26,10 +9,7 @@ chrome.contextMenus.create({
 
 // Listen for context menu clicks
 chrome.contextMenus.onClicked.addListener(function(info, tab) {
-    if (info.menuItemId === "openConfig") {
-        // Open the options page when "Configuration" is clicked
-        chrome.runtime.openOptionsPage();
-    } else if (info.menuItemId === "viewHistory") {
+    if (info.menuItemId === "viewHistory") {
         // Open the history page in a new tab when "View Alias History" is clicked
         chrome.tabs.create({ url: chrome.runtime.getURL("src/history/history.html") });
     }

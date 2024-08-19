@@ -26,7 +26,8 @@
       "default_title": "Generate Email Alias"
     },
     "background": {
-      "service_worker": "src/background/background.js"
+      "service_worker": "src/background/background.js",
+      "type": "module"
     },
     "content_scripts": [
       {
