@@ -46,6 +46,25 @@
             color: red;
             font-size: 14px;
         }
+        footer {
+            margin-top: 20px;
+            padding-top: 10px;
+            border-top: 1px solid #ccc;
+            font-size: 14px;
+            color: #666;
+        }
+        footer a {
+            color: #4CAF50;
+            text-decoration: none;
+        }
+        footer a:hover {
+            text-decoration: underline;
+        }
+        .info-text {
+            font-size: 10px;
+            color: #666;
+            margin-top: 0px;
+        }
     </style>
 </head>
 <body>
@@ -53,11 +72,16 @@
     <form id="configForm">
         <label for="baseEmail">Your email address:</label>
         <div class="input-group">
-            <input type="email" id="baseEmail" name="baseEmail" required>
+            <input type="email" id="baseEmail" name="baseEmail" placeholder="example@example.org" required>
             <button type="submit">Save</button>
         </div>
+        <p class="info-text">This email will be used as the base one for generating aliases.</p>
         <div id="errorMessage" class="error"></div>
     </form>
     <script src="options.js"></script>
-</body>
+
+    <footer>
+        <p>Version: <span id="appVersion">Loading...</span> | <a href="changelog.html">Changelog</a> | <a href="https://www.example.org">Feedback</a></p>
+    </footer>
+
 </html>

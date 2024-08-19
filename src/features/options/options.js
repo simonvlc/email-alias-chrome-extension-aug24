@@ -5,6 +5,9 @@ document.addEventListener('DOMContentLoaded', function() {
     const baseEmailInput = document.getElementById('baseEmail');
     const errorMessage = document.getElementById('errorMessage');
 
+    // Display the version
+    displayVersion();
+
     // Load the saved email address when the page loads
     chrome.storage.sync.get(['baseEmail'], function(result) {
         if (result.baseEmail) {
@@ -62,4 +65,14 @@ document.addEventListener('DOMContentLoaded', function() {
             e.returnValue = 'Are you sure? The extension won\'t work if you don\'t set a base email address.';
         }
     });
+
+    // Function to get and display the extension version
+    function displayVersion() {
+        chrome.management.getSelf(function(info) {
+            document.getElementById('appVersion').textContent = info.version;
+        });
+    }
+    
+    // Call the function when the page loads
+    displayVersion();
 });
