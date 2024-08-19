@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', function() {
             baseEmailInput.value = result.baseEmail;
         }
     });
-
+3
     // Add submit event listener to the form
     form.addEventListener('submit', function(e) {
         e.preventDefault(); // Prevent the form from submitting normally
@@ -29,13 +29,13 @@ document.addEventListener('DOMContentLoaded', function() {
         errorMessage.textContent = '';
     });
 
-    // Function to validate email (must be a Gmail address)
-    function validateEmail(email) {
-        const re = /^[a-zA-Z0-9._%+-]+@gmail\.com$/;
+    // Function to validate email
+    function validateEmail(email) {        
+        const re = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
         return re.test(email);
     }
 
-    // Function to save the email address using Chrome's storage API
+    // Function to s233333ave the email address using Chrome's storage API
     function saveEmail(email) {
         chrome.storage.sync.set({baseEmail: email}, function() {
             showSuccess('Email saved successfully!');
