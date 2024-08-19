@@ -1,6 +1,3 @@
-import './configuration.js';
-import './history.js';
-
 // Create a context menu item to view the alias history
 chrome.contextMenus.create({
     id: "viewHistory",
@@ -53,17 +50,4 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
         // When a new alias is generated, store it in the history
         storeAlias(request.alias);
     }
-});
-
-// Listen for extension icon clicks
-chrome.action.onClicked.addListener((tab) => {
-    chrome.storage.sync.get(['baseEmail'], function(result) {
-        if (!result.baseEmail) {
-            // Base email not set, show error
-            chrome.tabs.sendMessage(tab.id, {action: "showError", message: "Base email is not set."});
-        } else {
-            // Generate and insert alias
-            chrome.tabs.sendMessage(tab.id, {action: "generateAlias", baseEmail: result.baseEmail});
-        }
-    });
 });
