@@ -9,7 +9,7 @@ chrome.contextMenus.create({
 chrome.contextMenus.onClicked.addListener(function(info, tab) {
     if (info.menuItemId === "viewHistory") {
         // Open the history page in a new tab when "View Alias History" is clicked
-        chrome.tabs.create({ url: chrome.runtime.getURL("src/history/history.html") });
+        chrome.tabs.create({ url: chrome.runtime.getURL("src/features/history/history.html") });
     }
 });
 

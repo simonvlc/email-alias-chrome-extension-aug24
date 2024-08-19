@@ -32,14 +32,14 @@
     "content_scripts": [
       {
         "matches": ["<all_urls>"],
-        "js": ["src/content/aliasGenerator.js"]
+        "js": ["src/features/aliasGenerator/aliasGenerator.js"]
       }
     ],
     "web_accessible_resources": [
       {
-        "resources": ["src/history/history.html"],
+        "resources": ["src/features/history/history.html"],
         "matches": ["<all_urls>"]
       }
     ],
-    "options_page": "src/options/options.html"
+    "options_page": "src/features/options/options.html"
   }
