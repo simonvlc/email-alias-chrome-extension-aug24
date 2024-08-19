@@ -76,5 +76,66 @@ function extractTopLevelDomain(hostname) {
 
 // Function to show an error modal
 function showErrorModal(message) {
-    // ... (rest of the showErrorModal function remains unchanged)
+    // Create a modal element
+    const modal = document.createElement('div');
+    modal.style.cssText = `
+        position: fixed;
+        z-index: 9999;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0,0,0,0.4);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    `;
+
+    // Create the modal content
+    const modalContent = document.createElement('div');
+    modalContent.style.cssText = `
+        background-color: #fefefe;
+        padding: 20px;
+        border: 1px solid #888;
+        width: 80%;
+        max-width: 500px;
+        border-radius: 5px;
+        text-align: center;
+    `;
+
+    // Add the error message
+    const errorMessage = document.createElement('p');
+    errorMessage.textContent = message;
+    modalContent.appendChild(errorMessage);
+
+    // Add a close button
+    const closeButton = document.createElement('button');
+    closeButton.textContent = 'Close';
+    closeButton.style.cssText = `
+        padding: 10px 20px;
+        margin-top: 15px;
+        background-color: #f44336;
+        color: white;
+        border: none;
+        border-radius: 3px;
+        cursor: pointer;
+    `;
+    closeButton.onclick = function() {
+        document.body.removeChild(modal);
+    };
+    modalContent.appendChild(closeButton);
+
+    // Add the modal content to the modal
+    modal.appendChild(modalContent);
+
+    // Add the modal to the page
+    document.body.appendChild(modal);
+
+    // Close the modal when clicking outside of it
+    modal.onclick = function(event) {
+        if (event.target === modal) {
+            document.body.removeChild(modal);
+        }
+    };
 }
