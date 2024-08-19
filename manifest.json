@@ -1,8 +1,8 @@
 {
     "manifest_version": 3,
-    "name": "Email Alias Generator Aug24",
+    "name": "Email Alias Generator",
     "version": "1.0",
-    "description": "Generate email aliases on-the-fly based on the current website.",
+    "description": "Generate email aliases on-the-fly based on the current website domain.",
     "permissions": [
       "activeTab",
       "storage",
