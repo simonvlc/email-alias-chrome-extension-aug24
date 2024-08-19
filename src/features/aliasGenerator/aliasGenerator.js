@@ -139,3 +139,97 @@ function showErrorModal(message) {
         }
     };
 }
+
+// Function to create the alias generation icon
+function createAliasIcon() {
+    const icon = document.createElement('img');
+    icon.src = chrome.runtime.getURL('images/icon16.png');
+    icon.style.cssText = `
+        position: absolute;
+        right: 5px;
+        top: 50%;
+        transform: translateY(-50%);
+        cursor: pointer;
+        width: 16px;
+        height: 16px;
+    `;
+    return icon;
+}
+
+// Function to position the icon within the input field
+function positionIconInInput(input, icon) {
+    // Add padding to the input to make room for the icon
+    input.style.paddingRight = '25px';
+    // Ensure the parent element can position the icon absolutely
+    input.parentNode.style.position = 'relative';
+    // Append the icon to the parent of the input
+    input.parentNode.appendChild(icon);
+}
+
+// Function to generate an alias for a specific input field
+function generateAliasForInput(input) {
+    // Retrieve the base email from storage
+    chrome.storage.sync.get(['baseEmail'], function(result) {
+        if (!result.baseEmail) {
+            showErrorModal("Base email is not set.");
+        } else {
+            // Generate the alias
+            const alias = generateAlias(result.baseEmail);
+            // Set the input value to the generated alias
+            input.value = alias;
+            // Dispatch events to simulate user input
+            input.dispatchEvent(new Event('input', { bubbles: true }));
+            input.dispatchEvent(new Event('change', { bubbles: true }));
+            // Send message to store the generated alias in history
+            chrome.runtime.sendMessage({ action: "aliasGenerated", alias: alias });
+        }
+    });
+}
+
+// Function to add the alias generation icon to all email input fields on the page
+function addIconToEmailInputs() {
+    // Find all email input fields
+    const emailInputs = document.querySelectorAll('input[type="email"]');
+    emailInputs.forEach(input => {
+        // Create an icon for each input
+        const icon = createAliasIcon();
+        // Position the icon within the input
+        positionIconInInput(input, icon);
+        // Add click event listener to the icon
+        icon.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            generateAliasForInput(input);
+        });
+    });
+}
+
+// Call this function when the page loads to add icons to existing email inputs
+addIconToEmailInputs();
+
+// Create a MutationObserver to handle dynamically added email inputs
+const observer = new MutationObserver((mutations) => {
+    mutations.forEach((mutation) => {
+        if (mutation.type === 'childList') {
+            mutation.addedNodes.forEach((node) => {
+                if (node.nodeType === Node.ELEMENT_NODE) {
+                    // Find any new email inputs within added nodes
+                    const emailInputs = node.querySelectorAll('input[type="email"]');
+                    emailInputs.forEach(input => {
+                        // Add icon to each new email input
+                        const icon = createAliasIcon();
+                        positionIconInInput(input, icon);
+                        icon.addEventListener('click', (e) => {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            generateAliasForInput(input);
+                        });
+                    });
+                }
+            });
+        }
+    });
+});
+
+// Start observing the document body for changes
+observer.observe(document.body, { childList: true, subtree: true });

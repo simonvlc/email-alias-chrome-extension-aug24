@@ -33,12 +33,13 @@
     "content_scripts": [
       {
         "matches": ["<all_urls>"],
-        "js": ["src/features/aliasGenerator/aliasGenerator.js"]
+        "js": ["src/features/aliasGenerator/aliasGenerator.js"],
+        "run_at": "document_end"
       }
     ],
     "web_accessible_resources": [
       {
-        "resources": ["src/features/history/history.html"],
+        "resources": ["src/features/history/history.html", "src/features/test/test.html", "images/icon16.png"],
         "matches": ["<all_urls>"]
       }
     ],
